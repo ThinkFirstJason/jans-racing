@@ -231,6 +231,11 @@ strong { color: var(--yellow); font-weight: 700; }
 }
 .nav-links a[data-nav]:hover::after, .nav-links a.active::after { transform: scaleX(1) skewX(var(--skew)); }
 .nav-links a.active { color: var(--yellow); }
+.nav-ig { display: inline-flex; align-items: center; gap: 8px; }
+.nav-ig svg, .ig-hover svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; }
+.nav-ig svg .fill, .ig-hover svg .fill { fill: currentColor; stroke: none; }
+.nav-ig:hover { color: var(--yellow); }
+.nav-ig-label { display: none; }
 .nav-cta {
   padding: 10px 20px; background: var(--yellow); color: var(--black);
   transform: skewX(var(--skew)); transition: background 0.2s;
@@ -391,25 +396,30 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
    ========================================================= */
 .driver-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
 .driver-card {
-  position: relative; overflow: hidden; min-height: 520px;
-  display: flex; align-items: flex-end;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
   background: var(--yellow); color: var(--black);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%);
   transition: transform 0.4s var(--ease-out);
 }
 .driver-card--alt { background: var(--asphalt-2); color: var(--white); }
 .driver-card:hover { transform: translateY(-8px); }
+.driver-photo {
+  position: relative; aspect-ratio: 16 / 7; overflow: hidden; background: #000;
+  clip-path: polygon(0 0, 100% 0, 100% 78%, 0 100%);
+}
+.driver-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease-out); }
+.driver-card:hover .driver-photo img { transform: scale(1.06); }
+.driver-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.55), transparent 55%); }
 .driver-num {
-  position: absolute; top: -10px; right: 20px;
+  position: absolute; right: 22px; top: 18px; z-index: 1;
   font-family: var(--font-display); font-weight: 900; font-style: italic;
-  font-size: 330px; line-height: 0.85;
-  color: var(--black);
+  font-size: clamp(90px, 11vw, 150px); line-height: 0.8;
+  color: var(--yellow); -webkit-text-stroke: 3px var(--black);
+  text-shadow: 6px 6px 0 var(--black);
   transition: transform 0.6s var(--ease-out);
 }
-.driver-card:hover .driver-num { transform: translateX(-30px); }
-.driver-num--flower { top: 20px; right: 10px; width: 300px; }
-.driver-num--flower img { filter: invert(1); opacity: 0.12; }
-.driver-card:hover .driver-num--flower { transform: rotate(25deg); }
+.driver-card:hover .driver-num { transform: translateX(-16px); }
 .driver-stripes {
   /* the livery's horizontal speed stripes */
   position: relative; height: 62px; margin: 0 -40px 22px; width: calc(100% + 80px);
@@ -420,18 +430,34 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
 }
 .driver-card--alt .driver-stripes { background: repeating-linear-gradient(180deg, var(--yellow) 0 7px, transparent 7px 16px); }
 .driver-card.in .driver-stripes { transform: translateX(0); transition-delay: 0.3s; }
-.driver-body { position: relative; padding: 40px; }
+.driver-body { position: relative; padding: 10px 40px 60px; }
 .driver-tag { margin: 0 0 8px; font-family: var(--font-display); font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; font-size: 14px; }
 .driver-card--alt .driver-tag { color: var(--yellow); }
 .driver-name { margin: 0 0 14px; font-family: var(--font-display); font-weight: 900; font-style: italic; text-transform: uppercase; font-size: clamp(44px, 5vw, 66px); line-height: 0.9; }
 .driver-name span { display: inline-block; background: var(--black); color: var(--yellow); padding: 2px 14px 0 8px; transform: skewX(var(--skew)); margin-top: 4px; }
 .driver-card--alt .driver-name span { background: var(--yellow); color: var(--black); }
-.driver-body > p { margin: 0 0 22px; max-width: 440px; font-weight: 500; }
-.driver-stats { list-style: none; margin: 0; padding: 0; display: flex; gap: 28px; flex-wrap: wrap; }
+.driver-body > p { margin: 0 0 22px; font-weight: 500; }
+.driver-body > p.stats-label {
+  margin: 0 0 10px; padding-top: 14px; border-top: 2px solid currentColor;
+  font-family: var(--font-display); font-weight: 800; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.8;
+}
+.driver-card--alt .stats-label { border-color: rgba(255,255,255,0.2); }
+.driver-stats + .stats-label { margin-top: 22px; }
+.driver-stats { list-style: none; margin: 0; padding: 0; display: flex; gap: 14px 28px; flex-wrap: wrap; }
 .driver-stats li { display: flex; flex-direction: column; }
 .driver-stats b { font-family: var(--font-display); font-style: italic; font-weight: 900; font-size: 34px; line-height: 1; }
 .driver-stats span { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.75; }
 .driver-card--alt .driver-stats b { color: var(--yellow); }
+.driver-stats b sup { font-size: 0.45em; }
+.driver-stats--sm b { font-size: 26px; }
+.stat-link {
+  display: inline-flex; gap: 6px; margin-top: 26px;
+  font-family: var(--font-display); font-weight: 800; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; border-bottom: 3px solid currentColor; padding-bottom: 2px;
+  transition: gap 0.25s var(--ease-out);
+}
+.stat-link:hover { gap: 12px; }
+.driver-card--alt .stat-link { color: var(--yellow); }
 
 .alumni { margin-top: 70px; }
 .alumni-title { font-family: var(--font-display); font-weight: 800; font-style: italic; text-transform: uppercase; letter-spacing: 0.1em; font-size: 22px; margin: 0 0 20px; color: var(--muted); }
@@ -508,6 +534,22 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
 .tl-card--now h3, .tl-card--now p { color: var(--black); }
 
 /* =========================================================
+   PHOTO BANDS — wide parallax strips between sections
+   ========================================================= */
+.band { position: relative; height: clamp(320px, 42vw, 560px); overflow: hidden; display: flex; align-items: center; background: #000; }
+.band-img { position: absolute; left: 0; top: -15%; width: 100%; height: 130%; object-fit: cover; will-change: transform; }
+.band-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,11,0.85) 0%, rgba(10,10,11,0.35) 50%, transparent 80%); }
+.band--right .band-overlay { background: linear-gradient(0deg, rgba(10,10,11,0.85) 0%, rgba(10,10,11,0.2) 60%, transparent); }
+.band-copy { position: relative; }
+.band--right { align-items: flex-end; padding-bottom: 50px; }
+.band-title {
+  margin: 0; font-family: var(--font-display); font-weight: 900; font-style: italic; text-transform: uppercase;
+  font-size: clamp(38px, 6vw, 84px); line-height: 0.95; color: var(--white);
+  text-shadow: 0 6px 30px rgba(0,0,0,0.5);
+}
+.band-title span { color: var(--yellow); }
+
+/* =========================================================
    GALLERY
    ========================================================= */
 .gallery { background: var(--asphalt); }
@@ -515,6 +557,8 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
 .g-item { position: relative; padding: 0; border: 0; background: #000; cursor: zoom-in; overflow: hidden; }
 .g-wide { grid-column: span 2; grid-row: span 2; }
 .g-item:last-child { grid-column: 1 / -1; grid-row: span 2; }
+.g-pano { grid-column: 1 / -1; }
+.g-pano img { object-position: 50% 30%; }
 .g-item:last-child img { object-position: 50% 72%; }
 .g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-out), filter 0.4s; }
 .g-item::after {
@@ -537,6 +581,23 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
 .lb-close { top: 20px; right: 20px; }
 .lb-prev { left: 12px; }
 .lb-next { right: 12px; }
+
+/* =========================================================
+   INSTAGRAM
+   ========================================================= */
+.insta-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; margin-bottom: 44px; }
+.insta-head .section-title { text-transform: none; }
+.ig-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.ig-tile { position: relative; aspect-ratio: 1; overflow: hidden; background: #000; display: block; }
+.ig-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease-out), filter 0.4s; }
+.ig-hover {
+  position: absolute; inset: 0; display: grid; place-items: center; color: var(--black);
+  background: rgba(255, 209, 0, 0.85); opacity: 0; transition: opacity 0.3s;
+}
+.ig-hover svg { width: 40px; height: 40px; transform: scale(0.6) rotate(-20deg); transition: transform 0.4s var(--ease-out); }
+.ig-tile:hover .ig-hover, .ig-tile:focus-visible .ig-hover { opacity: 1; }
+.ig-tile:hover .ig-hover svg { transform: none; }
+.ig-tile:hover img { transform: scale(1.1); }
 
 /* =========================================================
    JAN'S TOWING
@@ -633,6 +694,9 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
   .footer-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
   .hero-gauge { display: none; }
+  .ig-grid { grid-template-columns: repeat(4, 1fr); }
+  .nav-ig-label { display: inline; }
+  .nav-ig svg { width: 28px; height: 28px; }
 }
 @media (max-width: 640px) {
   body { font-size: 16px; }
@@ -641,10 +705,16 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
   .hero-photo { object-position: 35% 72%; }
   .hero-overlay { background: linear-gradient(0deg, var(--black) 5%, rgba(10,10,11,0.55) 55%, rgba(10,10,11,0.75) 100%); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .driver-card { min-height: 480px; }
-  .driver-body { padding: 28px 24px 60px; }
+  .driver-body { padding: 8px 24px 60px; }
   .driver-stripes { margin: 0 -24px 18px; width: calc(100% + 48px); }
-  .driver-num { font-size: 260px; }
+  .driver-photo { aspect-ratio: 16 / 9; }
+  .driver-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px 8px; }
+  .driver-stats b { font-size: 28px; }
+  .driver-stats--sm b { font-size: 22px; }
+  .driver-stats span { font-size: 10px; letter-spacing: 0.06em; line-height: 1.3; margin-top: 3px; }
+  .ig-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .band-overlay { background: linear-gradient(0deg, rgba(10,10,11,0.85), rgba(10,10,11,0.3)); }
+  .band { align-items: flex-end; padding-bottom: 40px; }
   .alumni-card { grid-template-columns: 120px 1fr; gap: 16px; }
   .alumni-card img { height: 100px; }
   .tl-line { left: 8px; }
@@ -652,7 +722,7 @@ body.go .hero-in { animation: slide-in 0.8s var(--ease-out) forwards; animation-
   .tl-year { text-align: left; padding: 0; font-size: 36px; }
   .tl-card::before { left: -41px; top: -34px; }
   .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
-  .g-wide, .g-item:last-child { grid-column: auto; grid-row: auto; }
+  .g-wide, .g-item:last-child, .g-pano { grid-column: auto; grid-row: auto; }
   .car-num { font-size: 64px; }
   .car-info { padding: 20px; gap: 16px; }
   .footer-cols { grid-template-columns: 1fr 1fr; }

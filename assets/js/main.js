@@ -75,6 +75,7 @@
   var timeline = document.getElementById('timeline');
   var tlFill = document.getElementById('tlFill');
   var tlCar = document.getElementById('tlCar');
+  var parallaxImgs = reduceMotion ? [] : Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
   var lastY = window.scrollY;
   var scrollBoost = 0; // extra speed fed to the hero streaks
   var ticking = false;
@@ -93,6 +94,15 @@
     p = Math.max(0, Math.min(1, p));
     tlFill.style.transform = 'scaleY(' + p + ')';
     tlCar.style.top = (p * 100) + '%';
+
+    // photo bands drift slower than the page
+    var vh = window.innerHeight;
+    parallaxImgs.forEach(function (img) {
+      var br = img.parentNode.getBoundingClientRect();
+      if (br.bottom < 0 || br.top > vh) return;
+      var offset = (br.top + br.height / 2 - vh / 2) / vh;
+      img.style.transform = 'translate3d(0,' + (offset * -12) + '%,0)';
+    });
     ticking = false;
   }
   window.addEventListener('scroll', function () {
