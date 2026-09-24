@@ -7,7 +7,7 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var body = document.body;
 
-  /* ---------- start lights loader ---------- */
+  /* ---------- green flag loader ---------- */
   var loader = document.getElementById('loader');
 
   function greenFlag() {
@@ -18,22 +18,24 @@
   }
 
   var seen = false;
-  try { seen = sessionStorage.getItem('jr-lights') === '1'; } catch (e) {}
+  try { seen = sessionStorage.getItem('jr-intro') === '1'; } catch (e) {}
 
   if (reduceMotion || seen) {
     greenFlag();
   } else {
-    var bulbs = loader.querySelectorAll('.lights span');
-    bulbs.forEach(function (b, i) {
-      setTimeout(function () { b.classList.add('on'); }, 150 + i * 220);
+    // build the flag from vertical slices so each one can ripple on its own delay
+    var flag = document.getElementById('greenFlag');
+    var slices = 24;
+    for (var i = 0; i < slices; i++) {
+      var sl = document.createElement('span');
+      sl.style.setProperty('--i', i);
+      flag.appendChild(sl);
+    }
+    loader.querySelectorAll('.bw').forEach(function (w, i) {
+      setTimeout(function () { w.classList.add('on'); }, 350 + i * 380);
     });
-    // a slightly random hold before lights out, like the real thing
-    setTimeout(function () {
-      loader.querySelector('.lights').classList.add('go');
-      loader.querySelector('.loader-label').textContent = "AND AWAY WE GO!";
-      setTimeout(greenFlag, 180);
-    }, 150 + bulbs.length * 220 + 250 + Math.random() * 350);
-    try { sessionStorage.setItem('jr-lights', '1'); } catch (e) {}
+    setTimeout(greenFlag, 3300);
+    try { sessionStorage.setItem('jr-intro', '1'); } catch (e) {}
   }
 
   /* ---------- nav ---------- */

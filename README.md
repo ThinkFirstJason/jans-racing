@@ -4,12 +4,12 @@ Website for Jan's Racing Team, an ARCA Menards Series West team out of Glendora,
 
 ## Structure
 
-- `index.html` — single-scroll site: start-lights intro, hero, team story, stats, drivers, garage (liveries), track marquee, history timeline, gallery + lightbox, Jan's Towing, partnerships, footer
+- `index.html` — single-scroll site: green-flag intro, hero, team story, stats, drivers, garage (liveries), track marquee, history timeline, gallery + lightbox, Jan's Towing, partnerships, footer
 - `assets/css/style.css` — design system: yellow/black livery tokens, italic speed type, skewed panels, animations, responsive breakpoints
-- `assets/js/main.js` — start-lights loader, hero speed-streak canvas + speedometer, scroll progress, reveals, stat counters, timeline progress, mobile nav, lightbox
+- `assets/js/main.js` — green-flag loader, hero speed-streak canvas + speedometer, scroll progress, reveals, stat counters, timeline progress, mobile nav, lightbox
 - `assets/img/` — logos, hibiscus marks, and race photography (full size + `-sm` thumbnails)
 
-All motion respects `prefers-reduced-motion`. The start-lights intro plays once per browser session.
+All motion respects `prefers-reduced-motion`. The green-flag intro plays once per browser session.
 
 ## Running locally
 
